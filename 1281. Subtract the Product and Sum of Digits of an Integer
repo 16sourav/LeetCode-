@@ -10,7 +10,6 @@ public:
             p=p*d;
             n=n/10;
         }
-        return (p-s);
-        
+        return (p-s);  
     }
 };
