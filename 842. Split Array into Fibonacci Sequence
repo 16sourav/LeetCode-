@@ -1,0 +1,41 @@
+class Solution {
+public:
+    bool __splitIntoFibonacci(string num, int pos, vector<int> &sol) {
+        // base case for true
+        if(sol.size() > 2 && pos == num.size())
+            return true;
+        
+        long long number = 0;
+        for(int i = pos; i < num.size(); i++)
+        {
+            number = number * 10 + (num[i] - '0');
+
+            //avoid overflow
+            if(number > INT_MAX)
+                break;
+            
+            // avoid trailing zero's
+            if (num[pos] == '0' and i > pos)
+                break;
+
+            if (sol.size() > 2 && (number > (long long)sol[sol.size() - 1] + (long long)sol[sol.size() -2]))
+                break;
+
+            if (sol.size() < 2 || (number == (long long)sol[sol.size() - 1] + (long long)sol[sol.size() -2]))
+            {   
+                sol.push_back(number);
+
+                if(__splitIntoFibonacci(num, i + 1, sol))
+                    return true;
+                sol.pop_back();
+            }
+        }
+        return false;
+    }
+
+    vector<int> splitIntoFibonacci(string num) {
+        vector<int> sol;
+        __splitIntoFibonacci(num, 0, sol);
+        return sol;
+    }
+};
